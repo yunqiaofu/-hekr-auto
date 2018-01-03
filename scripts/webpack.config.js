@@ -9,7 +9,7 @@ const libraryName = _.upperFirst(_.camelCase(pkg.name.replace('@hekr/', '')))
 
 module.exports = {
   entry: {
-    auto: './src/index.js'
+    auto: './src/auto.js'
   },
   output: {
     path: path.resolve(__dirname, '../dist'),
