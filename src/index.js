@@ -2,6 +2,8 @@ import getKeysFromProtocol from './getKeysFromProtocol'
 import getComponentsWithState from './getComponentsWithState'
 
 export default class Auto {
+  // 定义版本号
+  static version = process.env.VERSION
   /**
    * 传入协议初始化配置
    * @param {Object} protocol
