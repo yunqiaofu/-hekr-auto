@@ -35,7 +35,7 @@ describe('Auto class attributes test', () => {
 })
 
 describe('Auto class components test', () => {
-  const auto = new Auto({})
+  const auto = new Auto()
   test('test use method', () => {
     auto.use({
       key: 'hk-rang-dashboard',

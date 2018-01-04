@@ -11,7 +11,7 @@ export default class Auto {
   constructor ({
     protocol = {},
     components = []
-  }) {
+  } = {}) {
     this.components = {
       bool: {},
       rang: {},

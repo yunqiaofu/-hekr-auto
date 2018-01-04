@@ -19,6 +19,9 @@
     "h5"
   ],
   "author": "nashaofu",
+  "publishConfig": {
+    "registry": "http://npm.hekr.me"
+  },
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.1.2",
