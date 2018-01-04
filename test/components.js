@@ -1,24 +1,21 @@
-const mockGet = jest.fn((option, state) => ({
-  attributes: {},
-  events: {}
-}))
+const mockGet = jest.fn((option, state) => ({}))
 
 export default [
   {
-    key: 'hk-bool-switch',
-    name: '开关',
+    name: 'hk-bool-switch',
+    title: '开关',
     type: 'bool',
     get: mockGet
   },
   {
-    key: 'hk-rang-slider',
-    name: '滑动条',
+    name: 'hk-rang-slider',
+    title: '滑动条',
     type: 'rang',
     get: mockGet
   },
   {
-    key: 'hk-enum-select',
-    name: '选择',
+    name: 'hk-enum-select',
+    title: '选择',
     type: 'enum',
     get: mockGet
   }

@@ -1,12 +1,12 @@
-import getKeysFromProtocol from './getKeysFromProtocol'
+import getOptionsFromProtocol from './getOptionsFromProtocol'
 import getComponentsWithState from './getComponentsWithState'
 
 export default class Auto {
   // 定义版本号
   static version = process.env.VERSION
   /**
-   * 传入协议初始化配置
-   * @param {Object} protocol
+   * 传入协议和组件数组
+   * @param {Object} params
    */
   constructor ({
     protocol = {},
@@ -14,17 +14,17 @@ export default class Auto {
   } = {}) {
     this.components = {
       bool: {},
-      rang: {},
-      enum: {}
+      enum: {},
+      rang: {}
     }
     this.protocol = protocol
-    if (components) {
+    if (Array.isArray(components)) {
       this.use(components)
     }
   }
 
-  get keys () {
-    return this.getKeysFromProtocol(this.protocol)
+  get options () {
+    return this.getOptionsFromProtocol(this.protocol)
   }
 
   /**
@@ -48,10 +48,10 @@ export default class Auto {
       throw new TypeError('Component is not Object')
     }
     if (this.components[component.type]) {
-      if (this.components[component.type][component.key]) {
-        throw new Error(`Duplicate name '${component.key}' in type '${component.type}'`)
+      if (this.components[component.type][component.name]) {
+        throw new Error(`Duplicate name '${component.name}' in type '${component.type}'`)
       }
-      this.components[component.type][component.key] = component
+      this.components[component.type][component.name] = component
     }
   }
 
@@ -59,8 +59,8 @@ export default class Auto {
    * 根据协议获取配置信息
    * @param {Object} protocol
    */
-  getKeysFromProtocol (protocol) {
-    return getKeysFromProtocol(protocol)
+  getOptionsFromProtocol (protocol) {
+    return getOptionsFromProtocol(protocol)
   }
 
   /**
@@ -69,7 +69,7 @@ export default class Auto {
    */
   getComponentsWithState (state) {
     return getComponentsWithState({
-      keys: this.keys,
+      options: this.options,
       components: this.components,
       state
     })

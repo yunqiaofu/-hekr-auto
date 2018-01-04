@@ -1,20 +1,20 @@
-import keys from './keys'
+import options from './options'
 import components from './components'
 import getComponentsWithState from '@/getComponentsWithState'
 
 describe('getComponentsWithState test', () => {
   const insatlledComponents = {
     bool: {},
-    rang: {},
-    enum: {}
+    enum: {},
+    rang: {}
   }
 
   components.forEach(item => {
-    insatlledComponents[item.type][item.key] = item
+    insatlledComponents[item.type][item.name] = item
   })
 
   const _components = getComponentsWithState({
-    keys,
+    options,
     components: insatlledComponents,
     state: {}
   })
@@ -26,8 +26,7 @@ describe('getComponentsWithState test', () => {
   test('components[0] should is match', () => {
     expect(_components[0]).toMatchObject({
       name: expect.any(String),
-      attributes: expect.any(Object),
-      events: expect.any(Object)
+      attributes: expect.any(Object)
     })
   })
 })

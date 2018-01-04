@@ -1,8 +1,8 @@
 import protocol from './protocol'
-import getKeysFromProtocol from '@/getKeysFromProtocol'
+import getOptionsFromProtocol from '@/getOptionsFromProtocol'
 
-describe('getKeysFromProtocol test', () => {
-  const _keys = getKeysFromProtocol(protocol)
+describe('getOptionsFromProtocol test', () => {
+  const _keys = getOptionsFromProtocol(protocol)
   test('keys length should is 3', () => {
     expect(_keys.length).toBe(3)
   })

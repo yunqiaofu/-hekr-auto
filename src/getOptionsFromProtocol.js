@@ -2,16 +2,16 @@
  * 根据协议中的字段获取UI配置信息
  */
 export default protocol => {
-  const keys = {}
+  const options = {}
   Object.keys(protocol)
     .forEach(key => {
       const cmd = protocol[key]
       const frameType = cmd.frameType
       cmd.fields.forEach(item => {
-        if (!keys[item.name]) {
+        if (!options[item.name]) {
           const type = getType(item)
           const typeData = getTypeData(type, item)
-          keys[item.name] = {
+          options[item.name] = {
             key: item.name,
             name: item.desc,
             mode: {
@@ -22,23 +22,23 @@ export default protocol => {
             type
           }
           if (typeData) {
-            keys[item.name][type] = typeData
+            options[item.name][type] = typeData
           }
         }
         if (frameType === 2) {
-          keys[item.name].mode.w = true
-          keys[item.name].cmdTag = cmd.cmdTag
+          options[item.name].mode.w = true
+          options[item.name].cmdTag = cmd.cmdTag
         } else {
-          keys[item.name].mode.r = true
+          options[item.name].mode.r = true
         }
       })
     })
-  return Object.keys(keys)
-    .map(key => keys[key])
+  return Object.keys(options)
+    .map(key => options[key])
 }
 
 /**
- * 获取keys的type
+ * 获取option的type
  * @param {Object} param0
  */
 const getType = ({
