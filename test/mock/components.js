@@ -1,4 +1,7 @@
-const mockGet = jest.fn((option, state) => ({}))
+const mockGet = jest.fn((option, state) => ({
+  props: {},
+  events: {}
+}))
 
 export default [
   {

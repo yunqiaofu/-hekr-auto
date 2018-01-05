@@ -9,10 +9,11 @@ export default ({
   return options.map(option => {
     const name = getComponentName(option, components)
     if (components[option.type][name]) {
-      const attributes = components[option.type][name].get(option, state)
+      const { props, events } = components[option.type][name].get(option, state)
       return {
         name,
-        attributes
+        props,
+        events
       }
     }
   }).filter(component => component)

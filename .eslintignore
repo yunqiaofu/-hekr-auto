@@ -1,2 +1,4 @@
-/dist/
-/test/coverage/
+build/*.js
+config/*.js
+dist/*.js
+test/coverage/

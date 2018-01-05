@@ -1,6 +1,6 @@
-import options from './options'
-import components from './components'
-import getComponentsWithState from '@/getComponentsWithState'
+import options from '../mock/options'
+import components from '../mock/components'
+import getComponentsWithState from '@/auto/getComponentsWithState'
 
 describe('getComponentsWithState test', () => {
   const insatlledComponents = {
@@ -26,7 +26,8 @@ describe('getComponentsWithState test', () => {
   test('components[0] should is match', () => {
     expect(_components[0]).toMatchObject({
       name: expect.any(String),
-      attributes: expect.any(Object)
+      props: expect.any(Object),
+      events: expect.any(Object)
     })
   })
 })

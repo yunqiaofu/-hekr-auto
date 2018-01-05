@@ -1,15 +1,20 @@
+'use strict'
+require('./check-versions')()
+
+process.env.NODE_ENV = 'production'
+
 const ora = require('ora')
-const path = require('path')
+const rm = require('rimraf')
 const chalk = require('chalk')
-const rimraf = require('rimraf')
 const webpack = require('webpack')
-const webpackConfig = require('./webpack.config')
+const config = require('../config')
+const webpackConfig = require('./webpack.prod.conf')
 
 const spinner = ora('building for production...')
 spinner.start()
 
-rimraf(path.resolve(__dirname, '../dist'), error => {
-  if (error) throw error
+rm(config.build.distDir, err => {
+  if (err) throw err
   webpack(webpackConfig, function (err, stats) {
     spinner.stop()
     if (err) throw err

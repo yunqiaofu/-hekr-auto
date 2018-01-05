@@ -1,5 +1,5 @@
-import protocol from './protocol'
-import getOptionsFromProtocol from '@/getOptionsFromProtocol'
+import protocol from '../mock/protocol'
+import getOptionsFromProtocol from '@/auto/getOptionsFromProtocol'
 
 describe('getOptionsFromProtocol test', () => {
   const _keys = getOptionsFromProtocol(protocol)

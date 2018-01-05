@@ -2,7 +2,10 @@ const path = require('path')
 
 module.exports = {
   rootDir: path.resolve(__dirname, '../'),
-  roots: ['<rootDir>/test/'],
+  roots: ['<rootDir>/test'],
+  moduleDirectories: [
+    'node_modules'
+  ],
   moduleFileExtensions: [
     'js',
     'json'
@@ -16,6 +19,6 @@ module.exports = {
   mapCoverage: true,
   coverageDirectory: '<rootDir>/test/coverage',
   collectCoverageFrom: [
-    'src/**.js'
+    'src/auto/**.js'
   ]
 }
