@@ -4,7 +4,11 @@ export default {
   name: Slider.name,
   title: '滑动条',
   type: 'rang',
-  get (option, state) {
+  get ({
+    send,
+    state,
+    option
+  }) {
     return {
       props: {
         value: state[option.key] === undefined ? option.rang.min : state[option.key],
@@ -15,8 +19,13 @@ export default {
         disabled: !option.mode.w
       },
       events: {
-        input () {
-          console.log(this, arguments)
+        input (val) {
+          if (option.mode.w) {
+            send({
+              cmdTag: option.cmdTag,
+              [option.key]: val
+            })
+          }
         }
       }
     }

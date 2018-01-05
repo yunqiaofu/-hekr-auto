@@ -4,7 +4,11 @@ export default {
   name: Dropmenu.name,
   title: '下拉菜单',
   type: 'enum',
-  get (option, state) {
+  get ({
+    send,
+    state,
+    option
+  }) {
     return {
       props: {
         title: option.name,
@@ -13,8 +17,13 @@ export default {
         disabled: !option.mode.w
       },
       events: {
-        input () {
-
+        input (val) {
+          if (option.mode.w) {
+            send({
+              cmdTag: option.cmdTag,
+              [option.key]: val
+            })
+          }
         }
       }
     }

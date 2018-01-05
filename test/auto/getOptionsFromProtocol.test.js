@@ -2,13 +2,13 @@ import protocol from '../mock/protocol'
 import getOptionsFromProtocol from '@/auto/getOptionsFromProtocol'
 
 describe('getOptionsFromProtocol test', () => {
-  const _keys = getOptionsFromProtocol(protocol)
-  test('keys length should is 3', () => {
-    expect(_keys.length).toBe(3)
+  const options = getOptionsFromProtocol(protocol)
+  test('options length should is 3', () => {
+    expect(options.length).toBe(3)
   })
 
-  test('keys[2] should is match', () => {
-    expect(_keys[2]).toMatchObject({
+  test('options[2] should is match', () => {
+    expect(options[2]).toMatchObject({
       key: expect.any(String),
       name: expect.any(String),
       mode: {

@@ -9,8 +9,7 @@
   hk-pop(v-model="show")
     hk-select(
       v-model="val",
-      :items="items",
-      :multiple="multiple"
+      :items="items"
     )
 </template>
 
@@ -29,10 +28,6 @@ export default {
     items: {
       type: Array,
       default: () => []
-    },
-    multiple: {
-      type: Boolean,
-      default: false
     },
     disabled: {
       type: Boolean,

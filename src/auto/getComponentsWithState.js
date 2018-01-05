@@ -1,15 +1,23 @@
+import debounce from 'lodash/debounce'
 /**
  * 传入组件，配置，状态数据，返回组件列表
  */
 export default ({
+  send,
+  delay,
+  state,
   options,
-  components,
-  state
+  components
 }) => {
   return options.map(option => {
     const name = getComponentName(option, components)
     if (components[option.type][name]) {
-      const { props, events } = components[option.type][name].get(option, state)
+      const _send = debounce(send, delay)
+      const { props, events } = components[option.type][name].get({
+        send: _send,
+        state,
+        option
+      })
       return {
         name,
         props,

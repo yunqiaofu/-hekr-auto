@@ -67,6 +67,11 @@ const getTypeData = (type, {
   enumeration
 }) => {
   switch (type) {
+    case 'enum':
+      return enumeration.map(item => ({
+        val: item.value,
+        name: item.desc
+      }))
     case 'rang':
       return {
         min: minValue,
@@ -75,11 +80,6 @@ const getTypeData = (type, {
         scale: 1,
         offset: 0
       }
-    case 'enum':
-      return enumeration.map(item => ({
-        val: item.value,
-        name: item.desc
-      }))
     case 'bool':
     default:
       break

@@ -1,3 +1,4 @@
+import use from './use'
 import getOptionsFromProtocol from './getOptionsFromProtocol'
 import getComponentsWithState from './getComponentsWithState'
 
@@ -9,22 +10,23 @@ export default class Auto {
    * @param {Object} params
    */
   constructor ({
-    protocol = {},
-    components = []
+    delay = 500, // 命令发送节流
+    send = () => { }, // 发送命令的函数
+    protocol = {}, // 协议
+    components = {} // 组件列表
   } = {}) {
+    this.send = send
+    this.delay = delay
     this.components = {
       bool: {},
       enum: {},
       rang: {}
     }
-    this.protocol = protocol
-    if (Array.isArray(components)) {
-      this.use(components)
-    }
-  }
-
-  get options () {
-    return this.getOptionsFromProtocol(this.protocol)
+    this.options = this.getOptionsFromProtocol(protocol)
+    Object.keys(components)
+      .forEach(key => {
+        this.use(components[key])
+      })
   }
 
   /**
@@ -32,27 +34,7 @@ export default class Auto {
    * @param {Object} component
    */
   use (component) {
-    if (Array.isArray(component)) {
-      component.forEach(cpt => this.install(cpt))
-    } else {
-      this.install(component)
-    }
-  }
-
-  /**
-   * 安装组件到对象上
-   * @param {Object} component
-   */
-  install (component) {
-    if (typeof component !== 'object') {
-      throw new TypeError('Component is not Object')
-    }
-    if (this.components[component.type]) {
-      if (this.components[component.type][component.name]) {
-        throw new Error(`Duplicate name '${component.name}' in type '${component.type}'`)
-      }
-      this.components[component.type][component.name] = component
-    }
+    use(this.components, component)
   }
 
   /**
@@ -68,10 +50,32 @@ export default class Auto {
    * @param {Object} state
    */
   getComponentsWithState (state) {
+    const defaultState = {}
+    this.options.forEach(option => {
+      switch (option.type) {
+        case 'enum':
+          defaultState[option.key] = option.enum[0] ? option.enum[0].val : 0
+          break
+        case 'rang':
+          defaultState[option.key] = option.rang.min
+          break
+        case 'bool':
+        default:
+          defaultState[option.key] = 0
+          break
+      }
+    })
+    const send = val => this.send({
+      ...defaultState,
+      ...state,
+      ...val
+    })
     return getComponentsWithState({
+      send,
+      state,
+      delay: this.delay,
       options: this.options,
-      components: this.components,
-      state
+      components: this.components
     })
   }
 }

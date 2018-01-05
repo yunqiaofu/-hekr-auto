@@ -3,19 +3,21 @@ import components from '../mock/components'
 import getComponentsWithState from '@/auto/getComponentsWithState'
 
 describe('getComponentsWithState test', () => {
-  const insatlledComponents = {
+  const cpts = {
     bool: {},
     enum: {},
     rang: {}
   }
 
   components.forEach(item => {
-    insatlledComponents[item.type][item.name] = item
+    cpts[item.type][item.name] = item
   })
 
   const _components = getComponentsWithState({
+    send: jest.fn(() => { }),
+    delay: 100,
     options,
-    components: insatlledComponents,
+    components: cpts,
     state: {}
   })
 

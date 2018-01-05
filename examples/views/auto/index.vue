@@ -11,7 +11,7 @@
 
 <script>
 import { Auto } from '@'
-import protocol from './protocol.json'
+import protocol from '../../../test/mock/protocol'
 import components from '@/components'
 
 export default {
@@ -22,10 +22,16 @@ export default {
     }
   },
   created () {
-    this.auto = new Auto({ protocol })
+    this.auto = new Auto({
+      protocol,
+      send () {
+        console.log(arguments)
+      }
+    })
     Object.keys(components)
       .forEach(key => this.auto.use(components[key]))
     this.components = this.auto.getComponentsWithState({})
+    console.log(this.auto)
   }
 }
 </script>

@@ -19,6 +19,7 @@ module.exports = {
   mapCoverage: true,
   coverageDirectory: '<rootDir>/test/coverage',
   collectCoverageFrom: [
-    'src/auto/**.js'
+    'src/auto/**.js',
+    '!src/auto/index.js'
   ]
 }
