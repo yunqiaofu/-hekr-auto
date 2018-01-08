@@ -46,6 +46,7 @@ export default {
         return this.value
       },
       set (val) {
+        this.show = false
         this.$emit('input', val)
       }
     },
