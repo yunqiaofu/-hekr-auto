@@ -14,16 +14,16 @@ export default ({
       cmd.fields.forEach(item => {
         if (!options[item.name]) {
           const type = getType(item)
-
+          const keyLang = lang[item.name] || {}
           // 获取对应的类型的数据
-          const typeData = getTypeData(type, item, lang[item.name])
+          const typeData = getTypeData(type, item, keyLang.keys)
 
           // 获取component和visible
           const uiConfig = ui.find(it => it.key === item.name)
 
           options[item.name] = {
             key: item.name,
-            name: (lang[item.name] || {})[item.name] || item.name,
+            name: keyLang.name || item.name,
             mode: {
               r: false,
               w: false

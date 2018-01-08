@@ -14,7 +14,7 @@ import { Auto } from '@'
 import protocol from '../../../test/mock/protocol'
 import components from '@/components'
 import ui from './ui'
-import lang from './lang'
+import locale from './locale'
 
 export default {
   name: 'auto-demo',
@@ -30,7 +30,7 @@ export default {
         console.log(arguments)
       },
       ui,
-      locale: lang,
+      locale,
       lang: 'en-US'
     })
     Object.keys(components)
