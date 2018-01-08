@@ -1,17 +1,17 @@
 export default [
   {
     key: 'sw',
-    component: undefined,
+    component: '',
     visible: true
   },
   {
     key: 'light',
-    component: '',
+    component: 'auto-rang-slider',
     visible: true
   },
   {
     key: 'mode',
-    component: '',
+    component: 'sss',
     visible: true
   }
 ]

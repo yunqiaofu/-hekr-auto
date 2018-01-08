@@ -20,7 +20,7 @@ const install = (components, component) => {
   }
   if (components[component.type]) {
     if (components[component.type][component.name]) {
-      throw new Error(`Duplicate name '${component.name}' in type '${component.type}'`)
+      console.warn(`Duplicate name '${component.name}' in type '${component.type}'`)
     }
     components[component.type][component.name] = component
   }

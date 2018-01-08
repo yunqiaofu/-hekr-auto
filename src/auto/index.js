@@ -1,4 +1,5 @@
 import use from './use'
+import components from '../components'
 import getOptionsWithLang from './getOptionsWithLang'
 import getComponentsWithState from './getComponentsWithState'
 
@@ -15,35 +16,41 @@ export default class Auto {
     delay = 500, // 命令发送节流
     locale = {}, // 语言包
     send = () => { }, // 发送命令的函数
-    protocol = {}, // 协议
-    components = {} // 组件列表
+    protocol = {} // 协议
   } = {}) {
     this.send = send
     this.delay = delay
+    this.lang = lang
+    this.locale = locale
     this.components = {
       bool: {},
       enum: {},
       rang: {}
     }
-    this.lang = {}
-    Object.keys(locale)
-      .forEach(key => {
-        this.lang[key] = (locale[key] || {})[lang]
-      })
+    // 安装library自带的组件
+    Object.keys(components)
+      .forEach(key => this.use(components[key]))
+
     this.options = this.getOptionsWithLang({
       ui,
-      lang: this.lang,
+      lang: this.getLang(),
       protocol
     })
-    Object.keys(components)
+  }
+
+  getLang () {
+    const lang = {}
+    // 获得指定语言的语言包
+    Object.keys(this.locale)
       .forEach(key => {
-        this.use(components[key])
+        lang[key] = (this.locale[key] || {})[this.lang]
       })
+    return lang
   }
 
   /**
    * 安装组件
-   * @param {Object} component
+   * @param {Object|Array} component
    */
   use (component) {
     use(this.components, component)
@@ -84,7 +91,10 @@ export default class Auto {
     })
     return getComponentsWithState({
       send,
-      state,
+      state: {
+        ...defaultState,
+        ...state
+      },
       delay: this.delay,
       options: this.options.filter(item => item.visible),
       components: this.components

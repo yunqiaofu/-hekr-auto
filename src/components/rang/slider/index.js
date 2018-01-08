@@ -5,7 +5,6 @@ export default {
   title: '滑动条',
   type: 'rang',
   get ({
-    send,
     state,
     option
   }) {
@@ -21,10 +20,10 @@ export default {
       events: {
         input (val) {
           if (option.mode.w) {
-            send({
+            return {
               cmdTag: option.cmdTag,
               [option.key]: val
-            })
+            }
           }
         }
       }

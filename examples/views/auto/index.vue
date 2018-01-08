@@ -11,10 +11,9 @@
 
 <script>
 import { Auto } from '@'
-import protocol from '../../../test/mock/protocol'
-import components from '@/components'
 import ui from './ui'
 import locale from './locale'
+import protocol from './protocol'
 
 export default {
   name: 'auto-demo',
@@ -33,8 +32,6 @@ export default {
       locale,
       lang: 'en-US'
     })
-    Object.keys(components)
-      .forEach(key => this.auto.use(components[key]))
     this.components = this.auto.getComponentsWithState({})
     console.log(this.auto)
   }

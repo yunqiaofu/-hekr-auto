@@ -5,7 +5,6 @@ export default {
   title: '开关',
   type: 'bool',
   get ({
-    send,
     state,
     option
   }) {
@@ -18,10 +17,10 @@ export default {
       events: {
         input (val) {
           if (option.mode.w) {
-            send({
+            return {
               cmdTag: option.cmdTag,
               [option.key]: val ? 1 : 0
-            })
+            }
           }
         }
       }

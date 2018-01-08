@@ -5,7 +5,6 @@ export default {
   title: '下拉菜单',
   type: 'enum',
   get ({
-    send,
     state,
     option
   }) {
@@ -19,10 +18,10 @@ export default {
       events: {
         input (val) {
           if (option.mode.w) {
-            send({
+            return {
               cmdTag: option.cmdTag,
               [option.key]: val
-            })
+            }
           }
         }
       }

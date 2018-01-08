@@ -3,21 +3,33 @@ import debounce from 'lodash/debounce'
  * 传入组件，配置，状态数据，返回组件列表
  */
 export default ({
-  send,
-  delay,
-  state,
-  options,
-  components
-}) => {
+  send = () => { },
+  delay = 500,
+  state = {},
+  options = [],
+  components = {}
+} = {}) => {
   return options.map(option => {
     const name = getComponentName(option, components)
     if (components[option.type][name]) {
-      const _send = debounce(send, delay)
+      // 获得组件的props和events
       const { props, events } = components[option.type][name].get({
-        send: _send,
         state,
         option
       })
+
+      // 对事件回掉进行封装
+      Object.keys(events)
+        .forEach(key => {
+          const fn = events[key]
+          // 命令节流
+          events[key] = debounce((...arg) => {
+            const cmd = fn(...arg)
+            if (typeof cmd === 'object' && cmd.cmdTag) {
+              send(cmd)
+            }
+          }, delay)
+        })
       return {
         name,
         props,
