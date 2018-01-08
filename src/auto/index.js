@@ -1,5 +1,5 @@
 import use from './use'
-import getOptionsFromProtocol from './getOptionsFromProtocol'
+import getOptionsWithLang from './getOptionsWithLang'
 import getComponentsWithState from './getComponentsWithState'
 
 export default class Auto {
@@ -10,7 +10,10 @@ export default class Auto {
    * @param {Object} params
    */
   constructor ({
+    ui = [], // ui配置信息
+    lang = 'zh-CN', // 语言
     delay = 500, // 命令发送节流
+    locale = {}, // 语言包
     send = () => { }, // 发送命令的函数
     protocol = {}, // 协议
     components = {} // 组件列表
@@ -22,7 +25,16 @@ export default class Auto {
       enum: {},
       rang: {}
     }
-    this.options = this.getOptionsFromProtocol(protocol)
+    this.lang = {}
+    Object.keys(locale)
+      .forEach(key => {
+        this.lang[key] = (locale[key] || {})[lang]
+      })
+    this.options = this.getOptionsWithLang({
+      ui,
+      lang: this.lang,
+      protocol
+    })
     Object.keys(components)
       .forEach(key => {
         this.use(components[key])
@@ -41,8 +53,8 @@ export default class Auto {
    * 根据协议获取配置信息
    * @param {Object} protocol
    */
-  getOptionsFromProtocol (protocol) {
-    return getOptionsFromProtocol(protocol)
+  getOptionsWithLang (protocol) {
+    return getOptionsWithLang(protocol)
   }
 
   /**
@@ -74,7 +86,7 @@ export default class Auto {
       send,
       state,
       delay: this.delay,
-      options: this.options,
+      options: this.options.filter(item => item.visible),
       components: this.components
     })
   }

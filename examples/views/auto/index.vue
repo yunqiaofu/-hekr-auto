@@ -13,6 +13,8 @@
 import { Auto } from '@'
 import protocol from '../../../test/mock/protocol'
 import components from '@/components'
+import ui from './ui'
+import lang from './lang'
 
 export default {
   name: 'auto-demo',
@@ -26,7 +28,10 @@ export default {
       protocol,
       send () {
         console.log(arguments)
-      }
+      },
+      ui,
+      locale: lang,
+      lang: 'en-US'
     })
     Object.keys(components)
       .forEach(key => this.auto.use(components[key]))

@@ -1,7 +1,11 @@
 /**
  * 根据协议中的字段获取UI配置信息
  */
-export default protocol => {
+export default ({
+  ui = [],
+  lang = {},
+  protocol = {}
+} = {}) => {
   const options = {}
   Object.keys(protocol)
     .forEach(key => {
@@ -10,19 +14,32 @@ export default protocol => {
       cmd.fields.forEach(item => {
         if (!options[item.name]) {
           const type = getType(item)
-          const typeData = getTypeData(type, item)
+
+          // 获取对应的类型的数据
+          const typeData = getTypeData(type, item, lang[item.name])
+
+          // 获取component和visible
+          const uiConfig = ui.find(it => it.key === item.name)
+
           options[item.name] = {
             key: item.name,
-            name: item.desc,
+            name: (lang[item.name] || {})[item.name] || item.name,
             mode: {
               r: false,
               w: false
             },
             unit: '',
-            type
+            type,
+            visible: true
           }
           if (typeData) {
             options[item.name][type] = typeData
+          }
+          // 控制组件的显示与隐藏
+          // 控制显示组件样式
+          if (uiConfig) {
+            options[item.name].component = uiConfig.component
+            options[item.name].visible = uiConfig.visible
           }
         }
         if (frameType === 2) {
@@ -64,13 +81,13 @@ const getType = ({
 const getTypeData = (type, {
   minValue,
   maxValue,
-  enumeration
-}) => {
+  enumeration = []
+} = {}, lang = {}) => {
   switch (type) {
     case 'enum':
       return enumeration.map(item => ({
         val: item.value,
-        name: item.desc
+        name: lang[item.value] || item.value
       }))
     case 'rang':
       return {
@@ -81,6 +98,10 @@ const getTypeData = (type, {
         offset: 0
       }
     case 'bool':
+      return {
+        0: lang[0] || 'off',
+        1: lang[1] || 'on'
+      }
     default:
       break
   }
