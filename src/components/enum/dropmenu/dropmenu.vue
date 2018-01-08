@@ -3,6 +3,7 @@
   hk-list(
     type="text",
     :leftText="title",
+    :rightText="getText",
     rightIcon="hk-icons-angel-right",
     @right-click="showPop"
   )
@@ -18,7 +19,7 @@ export default {
   name: 'auto-enum-dropmenu',
   props: {
     value: {
-      type: [Number, Array],
+      type: Number,
       default: 0
     },
     title: {
@@ -47,6 +48,9 @@ export default {
       set (val) {
         this.$emit('input', val)
       }
+    },
+    getText () {
+      return (this.items[this.val] || {}).name
     }
   },
   methods: {
