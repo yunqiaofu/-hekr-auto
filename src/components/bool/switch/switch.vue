@@ -14,11 +14,11 @@ export default {
   props: {
     value: {
       type: Boolean,
-      defult: false
+      default: false
     },
     title: {
       type: [String, Number],
-      defult: ''
+      default: ''
     },
     switchProps: {
       type: Object,
