@@ -4,22 +4,19 @@ export default {
   name: Switch.name,
   title: '开关',
   type: 'bool',
-  get ({
-    state,
-    option
-  }) {
+  get (options, value) {
     return {
       props: {
-        title: option.name,
-        value: !!state[option.key],
-        disabled: !option.mode.w
+        title: options.name,
+        value: value === undefined ? false : !!value,
+        disabled: !options.mode.w
       },
       events: {
         input (val) {
-          if (option.mode.w) {
+          if (options.mode.w) {
             return {
-              cmdTag: option.cmdTag,
-              [option.key]: val ? 1 : 0
+              cmdTag: options.cmdTag,
+              [options.key]: val ? 1 : 0
             }
           }
         }

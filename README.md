@@ -117,14 +117,14 @@ export default {
       })
       this.state = state
     })
-    this.components = this.$auto.getComponentsWithState(this.state)
+    this.components = this.$auto.getComponents(this.state)
   },
   watch: {
     state: {
       deep: true,
       handler (val) {
         // state变化之后就去更新页面，保证上报的数据能够渲染到页面
-        this.components = this.$auto.getComponentsWithState(val)
+        this.components = this.$auto.getComponents(val)
       }
     }
   }
@@ -144,25 +144,24 @@ export default {
   title: '开关', // 组件的标题
   type: 'bool', // 组件类型
   // 获取组件的配置参数
-  get ({
-    state, // 组件当前状态值，是在this.auto.getComponentsWithState(this.state)传入的参数
-    option // 参数配置
-  }) {
+  // options 配置信息
+  // state 组件当前状态值，是在this.auto.getComponents(this.state)传入的参数
+  get (options, state) {
     return {
       // 组件需要的props参数
       props: {
-        title: option.name,
-        value: !!state[option.key], // 计算出组件的值
-        disabled: !option.mode.w
+        title: options.name,
+        value: value === undefined ? false : !!value, // 计算出组件的值
+        disabled: !options.mode.w
       },
       // 组件要监听的事件
       events: {
         input (val) {
-          if (option.mode.w) {
+          if (options.mode.w) {
             // 返回命令，这里返回去之后会被Auto类初始化时传进来的send函数发送到云端
             // 下发命令一定要保证有cmdTag
             return {
-              cmdTag: option.cmdTag,
+              cmdTag: options.cmdTag,
               [option.key]: val ? 1 : 0
             }
           }

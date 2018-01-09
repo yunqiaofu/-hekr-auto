@@ -4,23 +4,20 @@ export default {
   name: Dropmenu.name,
   title: '下拉菜单',
   type: 'enum',
-  get ({
-    state,
-    option
-  }) {
+  get (options, value) {
     return {
       props: {
-        title: option.name,
-        value: state[option.key],
-        items: option.enum,
-        disabled: !option.mode.w
+        title: options.name,
+        value: value === undefined ? 0 : value,
+        items: options.enum,
+        disabled: !options.mode.w
       },
       events: {
         input (val) {
-          if (option.mode.w) {
+          if (options.mode.w) {
             return {
-              cmdTag: option.cmdTag,
-              [option.key]: val
+              cmdTag: options.cmdTag,
+              [options.key]: val
             }
           }
         }

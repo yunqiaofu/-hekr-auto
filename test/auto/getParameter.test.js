@@ -1,15 +1,15 @@
 import ui from '../mock/ui'
 import locale from '../mock/locale'
 import protocol from '../mock/protocol'
-import getOptionsWithLang from '@/auto/getOptionsWithLang'
+import getParameter from '@/auto/getParameter'
 
-describe('getOptionsWithLang test', () => {
+describe('getParameter test', () => {
   const lang = {}
   Object.keys(locale)
     .forEach(key => {
       lang[key] = (locale[key] || {})['zh-CN']
     })
-  const options = getOptionsWithLang({
+  const options = getParameter({
     ui,
     lang,
     protocol

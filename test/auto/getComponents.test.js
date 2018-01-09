@@ -1,8 +1,8 @@
 import options from '../mock/options'
 import components from '../mock/components'
-import getComponentsWithState from '@/auto/getComponentsWithState'
+import getComponents from '@/auto/getComponents'
 
-describe('getComponentsWithState test', () => {
+describe('getComponents test', () => {
   const cpts = {
     bool: {},
     enum: {},
@@ -13,7 +13,7 @@ describe('getComponentsWithState test', () => {
     cpts[item.type][item.name] = item
   })
 
-  const _components = getComponentsWithState({
+  const _components = getComponents({
     send: jest.fn(() => { }),
     delay: 100,
     options,

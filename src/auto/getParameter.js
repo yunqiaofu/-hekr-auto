@@ -1,15 +1,15 @@
 /**
- * 根据协议中的字段获取UI配置信息
+ * 根据协议命令中的字段获取UI配置信息
  */
 export default ({
   ui = [],
   lang = {},
-  protocol = {}
+  cmds = {}
 } = {}) => {
   const options = {}
-  Object.keys(protocol)
+  Object.keys(cmds)
     .forEach(key => {
-      const cmd = protocol[key]
+      const cmd = cmds[key]
       const frameType = cmd.frameType
       cmd.fields.forEach(item => {
         if (!options[item.name]) {
@@ -44,7 +44,7 @@ export default ({
         }
         if (frameType === 2) {
           options[item.name].mode.w = true
-          options[item.name].cmdTag = cmd.cmdTag
+          options[item.name].cmdTag = key
         } else {
           options[item.name].mode.r = true
         }

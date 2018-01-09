@@ -4,25 +4,22 @@ export default {
   name: Slider.name,
   title: '滑动条',
   type: 'rang',
-  get ({
-    state,
-    option
-  }) {
+  get (options, value) {
     return {
       props: {
-        value: state[option.key] === undefined ? option.rang.min : state[option.key],
-        title: option.name,
-        min: option.rang.min,
-        max: option.rang.max,
-        unit: option.unit,
-        disabled: !option.mode.w
+        value: value === undefined ? options.rang.min : value,
+        title: options.name,
+        min: options.rang.min,
+        max: options.rang.max,
+        unit: options.unit,
+        disabled: !options.mode.w
       },
       events: {
         input (val) {
-          if (option.mode.w) {
+          if (options.mode.w) {
             return {
-              cmdTag: option.cmdTag,
-              [option.key]: val
+              cmdTag: options.cmdTag,
+              [options.key]: val
             }
           }
         }

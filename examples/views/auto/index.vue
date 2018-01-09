@@ -18,7 +18,7 @@ export default {
     }
   },
   created () {
-    this.components = this.$auto.getComponentsWithState({})
+    this.components = this.$auto.getComponents({})
     console.log(this.$auto)
   }
 }

@@ -6,17 +6,16 @@ export default ({
   send = () => { },
   delay = 500,
   state = {},
-  options = [],
+  parameter = [],
   components = {}
 } = {}) => {
-  return options.map(option => {
-    const name = getComponentName(option, components)
-    if (components[option.type][name]) {
+  return parameter.map(item => {
+    console.log(item)
+    const name = getComponentName(item, components)
+    if (components[item.type][name]) {
+      const key = item.key
       // 获得组件的props和events
-      const { props, events } = components[option.type][name].get({
-        state,
-        option
-      })
+      const { props, events } = components[item.type][name].get(item, state[key])
 
       // 对事件回掉进行封装
       Object.keys(events)
@@ -31,6 +30,7 @@ export default ({
           }, delay)
         })
       return {
+        key,
         name,
         props,
         events
