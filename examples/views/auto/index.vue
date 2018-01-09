@@ -10,11 +10,6 @@
 </template>
 
 <script>
-import { Auto } from '@'
-import ui from './ui'
-import locale from './locale'
-import protocol from './protocol'
-
 export default {
   name: 'auto-demo',
   data () {
@@ -23,17 +18,8 @@ export default {
     }
   },
   created () {
-    this.auto = new Auto({
-      protocol,
-      send () {
-        console.log(arguments)
-      },
-      ui,
-      locale,
-      lang: 'en-US'
-    })
-    this.components = this.auto.getComponentsWithState({})
-    console.log(this.auto)
+    this.components = this.$auto.getComponentsWithState({})
+    console.log(this.$auto)
   }
 }
 </script>
