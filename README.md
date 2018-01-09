@@ -50,9 +50,26 @@ Vue.prototype.$hekr = window.$hekr = new Hekr({
 /* eslint-disable no-new */
 $hekr.ready(() => {
   Vue.use(HekrComponents, {
-    lang: $hekr.app.lang
+    lang: $hekr.app.lang || 'en-US'
   }) // 确保被安装，否则Auto无法正常运行
-  Vue.use(Auto) // 安装library中包含的组件\
+  Vue.use(Auto) // 安装library中包含的组件
+  /**
+   * 1. 拉取ui配置信息 ui
+   * 2. 获得语言包配置 locale
+   * 3. 传入得所有参数都是可选的
+   * 4. 但必须传入protocol,send，才能保证正确工作
+   * 5. ui是控制显示样式与是否显示的配置
+   * 6. locale是语言包
+   */
+  Vue.prototype.$auto = new Auto({
+    protocol: $hekr.template.protocol,
+    // 必须传入一个函数，不要直接写this.$hekr.send，这样会导致send函数内部this指向错误，后续会在sdk中修改
+    send: val => $hekr.send(val),
+    delay: 500, // 命令发送时，节流延时时间，默认值为500
+    ui, // 拉取到的ui配置信息
+    locale, // 拉取到的语言包配置
+    lang: $hekr.app.lang
+  })
   new Vue({
     el: '#app',
     store,
@@ -84,8 +101,6 @@ $hekr.ready(() => {
 </template>
 
 <script>
-import { Auto } from '@hekr/auto'
-
 export default {
   name: 'app',
   data () {
@@ -95,27 +110,17 @@ export default {
     }
   },
   mounted () {
-    /**
-     * 1. 拉取ui配置信息 ui
-     * 2. 获得语言包配置 locale
-     */
-    this.auto = new Auto({
-      protocol: this.$hekr.template.protocol,
-      // 必须传入一个函数，不要直接写this.$hekr.send，这样会导致send函数内部this指向错误，后续会在sdk中修改
-      send: val => this.$hekr.send(val),
-      ui, // 拉取到的ui配置信息
-      locale, // 拉取到的语言包配置
-      lang: this.$hekr.app.lang
-    })
-    this.components = this.auto.getComponentsWithState(this.state)
+    if (this.$auto) {
+      this.components = this.$auto.getComponentsWithState(this.state)
+    }
   },
   watch: {
     state: {
       deep: true,
       handler (val) {
         // state变化之后就去更新页面，保证上报的数据能够渲染到页面
-        if (this.auto) {
-          this.components = this.auto.getComponentsWithState(val)
+        if (this.$auto) {
+          this.components = this.$auto.getComponentsWithState(val)
         }
       }
     }
