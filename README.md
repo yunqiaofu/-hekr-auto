@@ -63,7 +63,7 @@ $hekr.ready(() => {
    */
   Vue.prototype.$auto = new Auto({
     protocol: $hekr.template.protocol,
-    // 必须传入一个函数，不要直接写this.$hekr.send，这样会导致send函数内部this指向错误，后续会在sdk中修改
+    // 必须传入一个函数，不要直接写this.$hekr.send，这样会导致send函数内部this指向错误
     send: val => $hekr.send(val),
     delay: 500, // 命令发送时，节流延时时间，默认值为500
     ui, // 拉取到的ui配置信息
@@ -110,18 +110,21 @@ export default {
     }
   },
   mounted () {
-    if (this.$auto) {
-      this.components = this.$auto.getComponentsWithState(this.state)
-    }
+    this.$hekr.on('devSend', data => {
+      const state = {...this.state}
+      Object.keys(data).forEach(key => {
+        state[key] = data[key]
+      })
+      this.state = state
+    })
+    this.components = this.$auto.getComponentsWithState(this.state)
   },
   watch: {
     state: {
       deep: true,
       handler (val) {
         // state变化之后就去更新页面，保证上报的数据能够渲染到页面
-        if (this.$auto) {
-          this.components = this.$auto.getComponentsWithState(val)
-        }
+        this.components = this.$auto.getComponentsWithState(val)
       }
     }
   }
