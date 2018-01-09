@@ -1,6 +1,6 @@
 {
   "name": "@hekr/auto",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A Vue.js project",
   "author": "nashaofu <diaocheng@outlook.com>",
   "main": "./auto.js",
@@ -16,7 +16,7 @@
     "@hekr/hekr-components": "latest"
   },
   "devDependencies": {
-    "@hekr/hekr-components": "^0.1.22",
+    "@hekr/hekr-components": "^0.2.0",
     "autoprefixer": "^7.1.2",
     "axios": "^0.17.1",
     "babel-core": "^6.22.1",
