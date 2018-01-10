@@ -1,70 +1,78 @@
 <template lang="pug">
 .docs
-  component.markdown-body(:is="view")
+  .markdown-body(v-html="doc")
   .docs-source(v-if="source")
     .docs-source-title 示例源码
     .docs-source-code
       pre
-        code.language-html {{ source }}
+        code.language-html(ref="source") {{ source }}
 </template>
 
 <script>
 import axios from 'axios'
 import hljs from 'highlight.js'
 import { routes } from './router'
-const components = {
-  readme: () => import('../README.md')
-}
-routes.forEach(route => {
-  components[`${route.name}-doc`] = () => import(`./views/${route.name}/README.md`)
-})
+import readme from '../README.md'
 
 export default {
   name: 'docs',
-  components,
   data () {
     return {
-      view: '',
+      docs: {},
       source: ''
     }
   },
+  computed: {
+    route () {
+      return this.$route.name
+    },
+    doc () {
+      return this.docs[this.route] || this.docs['readme']
+    }
+  },
   mounted () {
+    this.docs = { readme }
+    routes.forEach(async route => {
+      const doc = await import(`./views/${route.name}/README.md`)
+      this.$set(this.docs, route.name, doc)
+    })
     this.setView()
   },
   watch: {
-    $route () {
+    route () {
       this.setView()
     }
   },
   methods: {
-    async setView () {
+    setView () {
       if (this.$http) {
         this.$http.cancel()
       }
+      this.source = ''
       if (this.$route.name) {
-        this.view = this.$route.name + '-doc'
-        this.source = ''
-        this.$http = axios.CancelToken.source()
-        await axios.get(`/views/${this.$route.name}/index.vue`, {
-          cancelToken: this.$http.token
-        }).then(({ data }) => {
-          this.source = data
-        }).catch(() => {
-          this.$nitify('获取源码文件失败')
-        })
-        this.setHljs()
-      } else {
-        this.source = ''
-        this.view = 'readme'
-        this.setHljs()
+        this.fetchSource()
       }
     },
-    setHljs () {
-      setTimeout(() => {
-        this.$el.querySelectorAll('pre code').forEach(item => {
-          hljs.highlightBlock(item)
+    fetchSource () {
+      this.$http = axios.CancelToken.source()
+      // 拉取源代码
+      axios.get(`/views/${this.$route.name}/index.vue`, {
+        cancelToken: this.$http.token
+      }).then(({ data }) => {
+        // 高亮显示源代码
+        this.source = data
+        this.$nextTick(() => {
+          if (this.$refs.source) {
+            hljs.highlightBlock(this.$refs.source)
+          }
         })
-      }, 50)
+      }).catch(e => {
+        if (!e.__CANCEL__) {
+          this.$notify('获取源码文件失败')
+        }
+      }).finally(() => {
+        this.$http = null
+      })
     }
   }
 }

@@ -1,5 +1,6 @@
 'use strict'
 const path = require('path')
+const hljs = require('highlight.js')
 const vueLoaderConfig = require('./vue-loader.conf')
 
 function resolve (dir) {
@@ -18,7 +19,26 @@ module.exports = {
     rules: [
       {
         test: /\.md$/,
-        loader: 'vue-markdown-loader'
+        use: [
+          {
+            loader: "html-loader"
+          },
+          {
+            loader: "markdown-loader",
+            options: {
+              gfm: true,
+              tables: true,
+              breaks: true,
+              pedantic: true,
+              sanitize: true,
+              smartLists: true,
+              smartypants: true,
+              highlight (code) {
+                return hljs.highlightAuto(code).value;
+              }
+            }
+          }
+        ]
       },
       {
         test: /\.(js|vue)$/,
