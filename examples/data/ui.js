@@ -6,6 +6,11 @@ export default [
   },
   {
     key: 'light',
+    component: 'auto-rang-dashboard',
+    visible: true
+  },
+  {
+    key: 'light2',
     component: 'auto-rang-slider',
     visible: true
   },

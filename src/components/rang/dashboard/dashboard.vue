@@ -1,19 +1,18 @@
 <template lang="pug">
-.auto-rang-slider
-  hk-slider(
+.auto-rang-dashboard
+  hk-dashboard(
     v-model="val",
-    :min="min",
+    :disabled="disabled",
     :max="max",
+    :min="min",
     :step="step",
-    :title="title",
-    :unit="unit",
-    :disabled="disabled"
+    :type="type"
   )
 </template>
 
 <script>
 export default {
-  name: 'auto-rang-slider',
+  name: 'auto-rang-dashboard',
   props: {
     value: {
       type: Number,
@@ -35,13 +34,13 @@ export default {
       type: Number,
       default: 1
     },
+    type: {
+      type: String,
+      default: 'none'
+    },
     disabled: {
       type: Boolean,
       default: false
-    },
-    unit: {
-      type: String,
-      default: ''
     }
   },
   computed: {
@@ -57,7 +56,7 @@ export default {
 }
 </script>
 
-<style lang="stylus">
-.auto-rang-slider
-  padding 0.3rem 1rem
+<style lang="stylus" scoped>
+.auto-rang-dashboard
+  padding 0.5rem 0
 </style>

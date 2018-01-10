@@ -64,6 +64,20 @@ export default {
             'desc': '流光模式'
           }
         ]
+      },
+      {
+        'dataType': 'NUMBER',
+        'name': 'light2',
+        'desc': '亮度2',
+        'dataLength': 1,
+        'available': true,
+        'usedForIFTTT': false,
+        'order': 1,
+        'maxValue': 100,
+        'minValue': 0,
+        'maxValueMean': '100',
+        'minValueMean': '0',
+        'enumeration': []
       }
     ],
     'usedForIFTTT': false
@@ -159,6 +173,33 @@ export default {
             'desc': '流光模式'
           }
         ]
+      }
+    ],
+    'usedForIFTTT': false
+  },
+  '5': {
+    'opTimestamp': 0,
+    'fromDC': null,
+    'dc': null,
+    'cmdId': 5,
+    'cmdTag': 'setLight2',
+    'desc': '设置light2',
+    'frameType': 2,
+    'tags': [],
+    'fields': [
+      {
+        'dataType': 'NUMBER',
+        'name': 'light2',
+        'desc': '亮度2',
+        'dataLength': 1,
+        'available': true,
+        'usedForIFTTT': false,
+        'order': 1,
+        'maxValue': 100,
+        'minValue': 0,
+        'maxValueMean': '100',
+        'minValueMean': '0',
+        'enumeration': []
       }
     ],
     'usedForIFTTT': false
