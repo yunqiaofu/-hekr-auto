@@ -16,6 +16,7 @@ export default class Auto {
     delay = 500, // 命令发送节流
     locale = {}, // 语言包
     send = () => { }, // 发送命令的函数
+    filter = [], // 筛选数组，去掉模板中已经编写的
     protocol = {} // 协议
   } = {}) {
     this.options = {
@@ -25,6 +26,7 @@ export default class Auto {
       delay,
       state: {},
       locale,
+      filter,
       protocol,
       components: {
         bool: {},
@@ -132,7 +134,8 @@ export default class Auto {
         ...state
       },
       delay: this.delay,
-      parameter: this.parameter.filter(item => item.visible),
+      parameter: this.parameter
+        .filter(item => item.visible && this.options.filter.indexOf(item.key) === -1),
       components: this.options.components
     })
   }

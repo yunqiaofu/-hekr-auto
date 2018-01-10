@@ -66,6 +66,11 @@ $hekr.ready(() => {
     // 必须传入一个函数，不要直接写this.$hekr.send，这样会导致send函数内部this指向错误
     send: val => $hekr.send(val),
     delay: 500, // 命令发送时，节流延时时间，默认值为500
+    /*
+    * 要过滤掉的参数，即在模板中已经编写了的组件
+    * 也可以在getComponents执行后调用filter去过滤
+    */
+    filter: ['sw', 'light'],
     ui, // 拉取到的ui配置信息
     locale, // 拉取到的语言包配置
     lang: $hekr.app.lang
@@ -117,6 +122,7 @@ export default {
       })
       this.state = state
     })
+    // 这里可以根据key遍历过滤掉已经写在模板中的组件
     this.components = this.$auto.getComponents(this.state)
   },
   watch: {
