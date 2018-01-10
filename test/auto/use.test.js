@@ -18,22 +18,8 @@ describe('use method test', () => {
           get: expect.any(Function)
         }
       },
-      enum: {
-        'hk-enum-select': {
-          name: 'hk-enum-select',
-          title: '选择',
-          type: 'enum',
-          get: expect.any(Function)
-        }
-      },
-      rang: {
-        'hk-rang-slider': {
-          name: 'hk-rang-slider',
-          title: '滑动条',
-          type: 'rang',
-          get: expect.any(Function)
-        }
-      }
+      enum: {},
+      rang: {}
     })
   })
 })

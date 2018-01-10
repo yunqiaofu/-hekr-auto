@@ -28,7 +28,7 @@ export default ({
               r: false,
               w: false
             },
-            unit: keyLang.unit,
+            unit: keyLang.unit || '',
             type,
             visible: true
           }

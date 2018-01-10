@@ -1,34 +1,43 @@
 import ui from '../mock/ui'
+import cmds from '../mock/cmds'
 import locale from '../mock/locale'
-import protocol from '../mock/protocol'
 import getParameter from '@/auto/getParameter'
 
 describe('getParameter test', () => {
   const lang = {}
   Object.keys(locale)
     .forEach(key => {
-      lang[key] = (locale[key] || {})['zh-CN']
+      lang[key] = locale[key]['zh-CN']
     })
-  const options = getParameter({
+  const options = {
     ui,
-    lang,
-    protocol
-  })
-  test('options length should is 3', () => {
-    expect(options.length).toBe(3)
+    cmds,
+    lang
+  }
+  const parameter = getParameter(options)
+  test('parameter length should is 3', () => {
+    expect(parameter.length).toBe(1)
   })
 
-  test('options[2] should is match', () => {
-    expect(options[2]).toMatchObject({
-      key: 'mode',
-      name: '模式',
-      mode: {
-        r: expect.any(Boolean),
-        w: expect.any(Boolean)
-      },
-      unit: expect.any(String),
-      type: 'enum',
-      visible: expect.any(Boolean)
-    })
+  test('parameter should is match', () => {
+    expect(parameter).toEqual([
+      {
+        key: 'sw',
+        name: expect.any(String),
+        mode: {
+          r: false,
+          w: true
+        },
+        unit: expect.any(String),
+        type: 'bool',
+        bool: {
+          0: expect.any(String),
+          1: expect.any(String)
+        },
+        visible: true,
+        cmdTag: 'setSw',
+        component: undefined
+      }
+    ])
   })
 })

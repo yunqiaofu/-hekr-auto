@@ -10,7 +10,6 @@ export default ({
   components = {}
 } = {}) => {
   return parameter.map(item => {
-    console.log(item)
     const name = getComponentName(item, components)
     if (components[item.type][name]) {
       const key = item.key
