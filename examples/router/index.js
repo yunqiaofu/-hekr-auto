@@ -23,6 +23,11 @@ export const routes = [
     name: 'auto-rang-slider',
     path: '/auto-rang-slider',
     component: () => import('../views/auto-rang-slider')
+  },
+  {
+    name: 'auto-rang-dashboard',
+    path: '/auto-rang-dashboard',
+    component: () => import('../views/auto-rang-dashboard')
   }
 ]
 

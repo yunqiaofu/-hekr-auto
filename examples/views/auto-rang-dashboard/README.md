@@ -1,4 +1,4 @@
-# auto-rang-slider
+# auto-rang-dashboard
 
 ## Props
 
@@ -9,6 +9,7 @@
 | min | 最小值 | number |	- | - |
 | max | 最大值 | number | - | - |
 | step | 步长 | number | - | - |
+| type | 显示样式 | string | none/both/touch/button | - |
 | disabled | 是否禁用 | boolean | - | false |
 | unit | 单位 | string | - | - |
 
