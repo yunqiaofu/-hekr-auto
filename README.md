@@ -83,8 +83,8 @@ $hekr.ready(() => {
   })
 })
 ```
-5. 初始化Auto（App.vue）
-```xhtml
+5. 初始化Auto(App.vue)
+```html
 <template lang="pug">
 .app
   hk-header(
