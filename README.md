@@ -26,6 +26,7 @@ npm run test
 2. ```npm install @hekr/hekr-components --save```
 3. ```npm install @hekr/hekr-h5-sdk --save```
 4. 引入组件并全局安装
+
 ```javascript
 import Vue from 'vue'
 import App from './App'
@@ -83,7 +84,9 @@ $hekr.ready(() => {
   })
 })
 ```
+
 5. 初始化Auto(App.vue)
+
 ```html
 <template lang="pug">
 .app
