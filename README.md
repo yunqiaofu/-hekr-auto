@@ -26,6 +26,7 @@ npm run test
 2. ```npm install @hekr/hekr-components --save```
 3. ```npm install @hekr/hekr-h5-sdk --save```
 4. 引入组件并全局安装
+
   ```javascript
   import Vue from 'vue'
   import App from './App'
@@ -83,7 +84,9 @@ npm run test
     })
   })
   ```
+
 5. 初始化Auto(App.vue)
+
   ```html
   <template lang="pug">
   .app
@@ -142,6 +145,7 @@ npm run test
 1. 开发新的组件都放在**src/components**文件夹下对应的type文件夹中，每一个组件对应一个文件夹
 2. 组件命名方式采用**auto-[type]-[name]**的方式，其中type表示组件类型，name是具体的名称，如auto-bool-switch表示bool类型的switch组件
 3. 每一个具体的组件文件夹下都有一个index.js文件，其中导出一个对象，大致内容如下
+
   ```javascript
   import Switch from './switch.vue'
 
@@ -180,4 +184,5 @@ npm run test
     }
   }
   ```
+
 4. 组件vue文件编写和其他普通vue组件编写没有任何区别，只是要注意对其进行合理的封装，所需的参数和index.js文件互相对应即可
