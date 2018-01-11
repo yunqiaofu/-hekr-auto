@@ -140,6 +140,41 @@ npm run test
   </script>
   ```
 
+## UI显示配置项目
+```javascript
+[
+   {
+    key: temp
+    component: 组件名称，
+    visible: true/false
+  }
+]
+```
+
+## 语言配置
+```javascript
+{
+  temp: {
+    zh_CN: {
+      name: "开关",
+      unit: '',
+      keys:{
+        0: 关,
+        1: 开
+      }
+    },
+    en_US: {
+      name: "switch",
+      unit: '',
+      keys:{
+        0: off,
+        1: on
+      }
+    }
+  }
+}
+```
+
 ## 开发说明
 1. 开发新的组件都放在**src/components**文件夹下对应的type文件夹中，每一个组件对应一个文件夹
 2. 组件命名方式采用**auto-[type]-[name]**的方式，其中type表示组件类型，name是具体的名称，如auto-bool-switch表示bool类型的switch组件
