@@ -22,7 +22,7 @@ npm run test
 ```
 
 ## 开发文档
-http://10.1.1.6:3100/#/   
+http://10.1.1.6:3200/#/   
 
 ## 使用说明
 1. ```npm install @hekr/auto --save```
