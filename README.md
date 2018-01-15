@@ -21,6 +21,9 @@ npm run build --report
 npm run test
 ```
 
+## 开发文档
+http://10.1.1.6:3100/#/   
+
 ## 使用说明
 1. ```npm install @hekr/auto --save```
 2. ```npm install @hekr/hekr-components --save```

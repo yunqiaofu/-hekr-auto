@@ -1,0 +1,15 @@
+
+部署到杭州办公测试环境:
+  script:
+    - npm install --registry=https://registry.npm.taobao.org
+    - npm run docs
+    - rm -rf /opt/hekr-auto/*
+    - cp -R docs/* /opt/hekr-auto
+  tags:
+    - hz-pvos
+  only:
+    - master
+  when: always
+  environment:
+    name: 10.1.1.6
+    url: http://10.1.1.6:3200/
