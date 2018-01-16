@@ -2,11 +2,11 @@
 .auto-rang-dashboard
   hk-dashboard(
     v-model="val",
-    :disabled="disabled",
     :max="max",
     :min="min",
     :step="step",
-    :type="type"
+    :type="type",
+    :disabled="disabled"
   )
 </template>
 
