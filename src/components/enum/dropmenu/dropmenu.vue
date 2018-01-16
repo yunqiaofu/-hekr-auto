@@ -54,7 +54,9 @@ export default {
       return (this.items[this.val] || {}).name
     },
     rightIcon () {
-      return !this.disabled && 'hk-icons-angel-right'
+      if (!this.disabled) {
+        return 'hk-icons-angel-right'
+      }
     }
   },
   methods: {
