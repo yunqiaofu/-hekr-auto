@@ -1,6 +1,6 @@
 {
   "name": "@hekr/auto",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "A Vue.js project",
   "author": "nashaofu <diaocheng@outlook.com>",
   "main": "./auto.js",

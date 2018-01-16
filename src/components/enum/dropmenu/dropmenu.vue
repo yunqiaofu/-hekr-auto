@@ -4,7 +4,7 @@
     type="text",
     :leftText="title",
     :rightText="getText",
-    rightIcon="hk-icons-angel-right",
+    :rightIcon="rightIcon",
     @right-click="showPop"
   )
   hk-pop(v-model="show")
@@ -52,6 +52,9 @@ export default {
     },
     getText () {
       return (this.items[this.val] || {}).name
+    },
+    rightIcon () {
+      return !this.disabled && 'hk-icons-angel-right'
     }
   },
   methods: {
