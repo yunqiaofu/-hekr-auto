@@ -90,6 +90,22 @@ export default class Auto {
   }
 
   /**
+   * 获取指定参数的配置
+   * @param {String} key
+   */
+  get (key) {
+    return this.parameter.find(item => item.key === key)
+  }
+
+  /**
+   * 判断是否有这个参数在协议中
+   * @param {String} key
+   */
+  has (key) {
+    return !!this.get(key)
+  }
+
+  /**
    * 安装组件
    * @param {Object|Array} component
    */
