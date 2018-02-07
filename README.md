@@ -22,7 +22,7 @@ npm run test
 ```
 
 ## 开发文档
-http://10.1.1.6:3200/#/   
+http://10.1.1.6:3200/#/
 
 ## 使用说明
 1. ```npm install @hekr/auto --save```
@@ -222,3 +222,52 @@ http://10.1.1.6:3200/#/
   }
   ```
 4. 组件vue文件编写和其他普通vue组件编写没有任何区别，只是要注意对其进行合理的封装，所需的参数和index.js文件互相对应即可
+
+
+## Auto类
+
+### 属性
+
+| 名称 | 类型 | 说明 |
+| --- | --- | --- |
+| options | object | 类的相关配置参数 |
+| cmds | object | 以cmdTag为键的对象集合 |
+| parameter | array | 每一项为经过抽象的参数，包含参数类型、名称、标识符、取值范围、关联下发命令等参数 |
+
+### 方法
+
+| 名称 | 说明 | 参数 | 返回值 |
+| --- | --- | --- | --- |
+| get | 获取指定参数的配置 | 参数标识符 | parameter中某一项 |
+| has | 指定参数是否存在于协议中 | 参数标识符 | true/false |
+| use | 安装扩展组件，安装之前必须确保组件已经被全局安装 | 组件数组或单个组件 | - |
+
+组件配置如下
+```js
+import Switch from './switch.vue'
+
+export default {
+  name: Switch.name,
+  title: '开关',
+  type: 'bool',
+  get (options, value) {
+    return {
+      props: {
+        title: options.name,
+        value: value === undefined ? false : !!value,
+        disabled: !options.mode.w
+      },
+      events: {
+        input (val) {
+          if (options.mode.w) {
+            return {
+              cmdTag: options.cmdTag,
+              [options.key]: val ? 1 : 0
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
