@@ -6,7 +6,7 @@ import router from './router'
 import hekrComponents from '@hekr/hekr-components'
 import Auto from '../src'
 import ui from './data/ui'
-import locale from './data/locale'
+import i18n from './data/i18n'
 import protocol from './data/protocol'
 
 Vue.config.productionTip = false
@@ -22,7 +22,7 @@ Vue.use(Auto, {
     console.log(arguments)
   },
   ui,
-  locale,
+  i18n,
   lang: 'en-US'
 })
 console.log(Auto)

@@ -59,11 +59,11 @@ http://10.1.1.6:3200/#/
     Vue.use(Auto) // 安装library中包含的组件
     /**
      * 1. 拉取ui配置信息 ui
-     * 2. 获得语言包配置 locale
+     * 2. 获得语言包配置 i18n
      * 3. 传入得所有参数都是可选的
      * 4. 但必须传入protocol,send，才能保证正确工作
      * 5. ui是控制显示样式与是否显示的配置
-     * 6. locale是语言包
+     * 6. i18n是语言包
      */
     Vue.prototype.$auto = new Auto({
       protocol: $hekr.template.protocol,
@@ -76,7 +76,7 @@ http://10.1.1.6:3200/#/
       */
       filter: ['sw', 'light'],
       ui, // 拉取到的ui配置信息
-      locale, // 拉取到的语言包配置
+      i18n, // 拉取到的语言包配置
       lang: $hekr.app.lang
     })
     new Vue({

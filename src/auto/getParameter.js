@@ -3,7 +3,7 @@
  */
 export default ({
   ui = [],
-  lang = {},
+  i18n = {},
   cmds = {}
 } = {}) => {
   const options = {}
@@ -14,7 +14,7 @@ export default ({
       cmd.fields.forEach(item => {
         if (!options[item.name]) {
           const type = getType(item)
-          const keyLang = lang[item.name] || {}
+          const keyLang = i18n[item.name] || {}
           // 获取对应的类型的数据
           const typeData = getTypeData(type, item, keyLang.keys)
 

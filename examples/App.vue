@@ -16,6 +16,9 @@ export default {
     Sidebar,
     Demo,
     Docs
+  },
+  mounted () {
+    console.log(this.$auto)
   }
 }
 </script>

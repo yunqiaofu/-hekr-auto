@@ -1,14 +1,14 @@
 import ui from '../mock/ui'
 import cmds from '../mock/cmds'
-import locale from '../mock/locale'
+import i18n from '../mock/i18n'
+import getI18n from '@/auto/getI18n'
 import getParameter from '@/auto/getParameter'
 
 describe('getParameter test', () => {
-  const lang = {}
-  Object.keys(locale)
-    .forEach(key => {
-      lang[key] = locale[key]['zh-CN']
-    })
+  const lang = getI18n({
+    lang: 'zh-CN',
+    i18n
+  })
   const options = {
     ui,
     cmds,

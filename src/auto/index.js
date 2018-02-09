@@ -1,7 +1,10 @@
 import use from './use'
+import getI18n from './getI18n'
+import getCmds from './getCmds'
 import components from '../components'
 import getParameter from './getParameter'
 import getComponents from './getComponents'
+import getDefaultState from './getDefaultState'
 
 export default class Auto {
   // 定义版本号
@@ -13,19 +16,18 @@ export default class Auto {
   constructor ({
     ui = [], // ui配置信息
     lang = 'zh-CN', // 语言
-    delay = 500, // 命令发送节流
-    locale = {}, // 语言包
+    i18n = {}, // 语言包
     send = () => { }, // 发送命令的函数
+    delay = 500, // 命令发送节流
     filter = [], // 筛选数组，去掉模板中已经编写的
     protocol = {} // 协议
   } = {}) {
     this.options = {
       ui,
       lang,
+      i18n,
       send,
       delay,
-      state: {},
-      locale,
       filter,
       protocol,
       components: {
@@ -35,58 +37,49 @@ export default class Auto {
       }
     }
 
+    this.i18n = this.getI18n()
+    this.cmds = this.getCmds()
+    this.parameter = this.getParameter()
+    this.defaultState = this.getDefaultState()
+
     // 安装library自带的组件
     Object.keys(components)
       .forEach(key => this.use(components[key]))
+  }
 
-    // 获取默认状态值
-    this.parameter.forEach(option => {
-      switch (option.type) {
-        case 'enum':
-          this.options.state[option.key] = option.enum[0] ? option.enum[0].val : 0
-          break
-        case 'rang':
-          this.options.state[option.key] = option.rang.min
-          break
-        case 'bool':
-        default:
-          this.options.state[option.key] = 0
-          break
-      }
+  /**
+   * 根基语言配置从语言包中提取出指定语言包配置
+   */
+  getI18n () {
+    return getI18n({
+      lang: this.options.lang,
+      i18n: this.options.i18n
     })
   }
 
   /**
-   * 命令对象集合
+   * 获取命令对象集合
    */
-  get cmds () {
-    const cmds = {}
-    Object.keys(this.options.protocol)
-      .forEach(key => {
-        const cmd = this.options.protocol[key]
-        cmds[cmd.cmdTag] = {
-          frameType: cmd.frameType,
-          fields: cmd.fields
-        }
-      })
-    return cmds
+  getCmds () {
+    return getCmds(this.options.protocol)
   }
 
   /**
    * 根据协议命令获取配置信息
    */
-  get parameter () {
-    const lang = {}
-    // 获得指定语言的语言包
-    Object.keys(this.options.locale)
-      .forEach(key => {
-        lang[key] = (this.options.locale[key] || {})[this.options.lang]
-      })
+  getParameter () {
     return getParameter({
       ui: this.options.ui,
-      lang: lang,
+      i18n: this.i18n,
       cmds: this.cmds
     })
+  }
+
+  /**
+   * 计算出默认state
+   */
+  getDefaultState () {
+    return getDefaultState(this.parameter)
   }
 
   /**
@@ -103,6 +96,15 @@ export default class Auto {
    */
   has (key) {
     return !!this.get(key)
+  }
+
+  /**
+   * 返回参数是否显示
+   * @param {String} key
+   */
+  visible (key) {
+    const parameter = this.get(key)
+    return parameter ? parameter.visible : false
   }
 
   /**
@@ -130,7 +132,10 @@ export default class Auto {
         })
       cmd = opts
     }
-    this.options.send(cmd)
+    this.options.send({
+      ...this.defaultState,
+      cmd
+    })
   }
 
   /**
@@ -138,15 +143,10 @@ export default class Auto {
    * @param {Object} state
    */
   getComponents (state = {}) {
-    const send = cmd => this.send({
-      ...this.options.state,
-      ...state,
-      ...cmd
-    })
     return getComponents({
-      send,
+      send: cmd => this.send({ ...state, ...cmd }),
       state: {
-        ...this.options.state,
+        ...this.defaultState,
         ...state
       },
       delay: this.delay,

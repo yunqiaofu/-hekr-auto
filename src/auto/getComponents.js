@@ -19,10 +19,10 @@ export default ({
       // 对事件回掉进行封装
       Object.keys(events)
         .forEach(key => {
-          const fn = events[key]
+          const listener = events[key]
           // 命令节流
           events[key] = debounce((...arg) => {
-            const cmd = fn(...arg)
+            const cmd = listener(...arg)
             if (typeof cmd === 'object' && cmd.cmdTag) {
               send(cmd)
             }
