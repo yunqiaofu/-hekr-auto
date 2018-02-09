@@ -14,12 +14,9 @@ describe('getParameter test', () => {
     cmds,
     lang
   }
-  const parameter = getParameter(options)
-  test('parameter length should is 3', () => {
-    expect(parameter.length).toBe(1)
-  })
 
   test('parameter should is match', () => {
+    const parameter = getParameter(options)
     expect(parameter).toEqual([
       {
         key: 'sw',

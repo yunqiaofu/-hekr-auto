@@ -2,7 +2,7 @@ import use from '@/auto/use'
 import components from '../mock/components'
 
 describe('use method test', () => {
-  test('test auto options', () => {
+  test('components should is match', () => {
     const cpts = {
       bool: {},
       enum: {},

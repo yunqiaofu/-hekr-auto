@@ -53,19 +53,16 @@ http://10.1.1.6:3200/#/
   // 等到sdk完成之后，初始化应用，保证语言和配置信息能够拿到
   /* eslint-disable no-new */
   $hekr.ready(() => {
+    // 确保被安装，否则Auto无法正常运行
     Vue.use(HekrComponents, {
       lang: $hekr.app.lang || 'en-US'
-    }) // 确保被安装，否则Auto无法正常运行
-    Vue.use(Auto) // 安装library中包含的组件
-    /**
-     * 1. 拉取ui配置信息 ui
-     * 2. 获得语言包配置 i18n
-     * 3. 传入得所有参数都是可选的
-     * 4. 但必须传入protocol,send，才能保证正确工作
-     * 5. ui是控制显示样式与是否显示的配置
-     * 6. i18n是语言包
-     */
-    Vue.prototype.$auto = new Auto({
+    })
+
+    // 安装library中包含的组件
+    Vue.use(Auto, {
+      lang: $hekr.app.lang
+      ui: $hekr.i18nUI.ui, // 拉取到的ui配置信息
+      i18n: $hekr.i18nUI.i18n, // 拉取到的语言包配置
       protocol: $hekr.template.protocol,
       // 必须传入一个函数，不要直接写this.$hekr.send，这样会导致send函数内部this指向错误
       send: val => $hekr.send(val),
@@ -75,10 +72,8 @@ http://10.1.1.6:3200/#/
       * 也可以在getComponents执行后调用filter去过滤
       */
       filter: ['sw', 'light'],
-      ui, // 拉取到的ui配置信息
-      i18n, // 拉取到的语言包配置
-      lang: $hekr.app.lang
     })
+
     new Vue({
       el: '#app',
       store,
@@ -232,7 +227,9 @@ http://10.1.1.6:3200/#/
 | --- | --- | --- |
 | options | object | 类的相关配置参数 |
 | cmds | object | 以cmdTag为键的对象集合 |
+| i18n | object | 当前语言配置 |
 | parameter | array | 每一项为经过抽象的参数，包含参数类型、名称、标识符、取值范围、关联下发命令等参数 |
+| defaultState | object | 所有参数的默认状态 |
 
 ### 方法
 
@@ -240,6 +237,7 @@ http://10.1.1.6:3200/#/
 | --- | --- | --- | --- |
 | get | 获取指定参数的配置 | 参数标识符 | parameter中某一项 |
 | has | 指定参数是否存在于协议中 | 参数标识符 | true/false |
+| visible | 返回指定参数是否显示，如参数列表中没有这个参数就返回false | 参数标识符 | true/false |
 | use | 安装扩展组件，安装之前必须确保组件已经被全局安装 | 组件数组或单个组件 | - |
 
 组件配置如下

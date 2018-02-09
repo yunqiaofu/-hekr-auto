@@ -132,10 +132,7 @@ export default class Auto {
         })
       cmd = opts
     }
-    this.options.send({
-      ...this.defaultState,
-      cmd
-    })
+    this.options.send({ ...this.defaultState, ...cmd })
   }
 
   /**

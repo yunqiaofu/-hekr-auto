@@ -34,10 +34,6 @@ export default {
       type: Number,
       default: 1
     },
-    type: {
-      type: String,
-      default: 'none'
-    },
     disabled: {
       type: Boolean,
       default: false
@@ -51,6 +47,9 @@ export default {
       set (val) {
         this.$emit('input', val)
       }
+    },
+    type () {
+      return this.disabled ? 'none' : 'touch'
     }
   }
 }

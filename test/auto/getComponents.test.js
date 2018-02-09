@@ -6,8 +6,8 @@ import getComponents from '@/auto/getComponents'
 describe('getComponents test', () => {
   const options = {
     send: jest.fn(() => { }),
-    delay: 500,
     state: {},
+    delay: 500,
     parameter,
     components: {
       bool: {},
@@ -16,14 +16,10 @@ describe('getComponents test', () => {
     }
   }
   use(options.components, components)
-  const _components = getComponents(options)
 
-  test('_components get methods should be call', () => {
-    expect(_components.length).toBe(1)
-  })
-
-  test('_components should is match', () => {
-    expect(_components).toEqual([
+  test('getComponents result should is match', () => {
+    const cmpts = getComponents(options)
+    expect(cmpts).toEqual([
       {
         key: expect.any(String),
         name: expect.any(String),
