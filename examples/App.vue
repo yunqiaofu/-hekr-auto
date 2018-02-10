@@ -26,7 +26,7 @@ export default {
 <style lang="stylus">
 @import "~normalize.css"
 @import "~font-awesome/css/font-awesome.css"
-@import "~@hekr/hekr-components/hekr-components.css"
+@import "~@hekr/hekr-components/dist/hekr-components.css"
 
 html
   font-size 20px !important
