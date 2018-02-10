@@ -25,7 +25,10 @@ module.exports = {
   docs: {
     env: require('./prod.env'),
     distDir: path.resolve(__dirname, '../docs'),
-    productionSourceMap: true
+    productionSourceMap: true,
+    productionGzip: false,
+    productionGzipExtensions: ['js', 'css'],
+    bundleAnalyzerReport: process.env.npm_config_report
   },
   dev: {
     env: require('./dev.env'),

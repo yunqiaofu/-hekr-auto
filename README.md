@@ -136,6 +136,10 @@ http://10.1.1.6:3200/#/
     }
   }
   </script>
+
+  <style lang="stylus">
+  import "~@hekr/auto/dist/auto.css"
+  </style>
   ```
 
 ## UI显示配置项目

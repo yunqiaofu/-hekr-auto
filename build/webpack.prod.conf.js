@@ -7,7 +7,6 @@ const config = require('../config')
 const pkg = require('../package.json')
 const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.conf')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 
@@ -43,7 +42,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       compress: {
         warnings: false
       },
-      sourceMap: true
+      sourceMap: config.docs.productionSourceMap
     }),
     // extract css into its own file
     new ExtractTextPlugin({
@@ -52,21 +51,10 @@ const webpackConfig = merge(baseWebpackConfig, {
     // Compress extracted CSS. We are using this plugin so that possible
     // duplicated CSS from different components can be deduped.
     new OptimizeCSSPlugin({
-      cssProcessorOptions: {
-        safe: true
-      }
-    }),
-    // copy custom static assets
-    new CopyWebpackPlugin([
-      {
-        from: path.resolve(__dirname, '../package.json'),
-        to: config.build.distDir
-      },
-      {
-        from: path.resolve(__dirname, '../README.md'),
-        to: config.build.distDir
-      }
-    ])
+      cssProcessorOptions: config.docs.productionSourceMap
+        ? { safe: true, map: { inline: false } }
+        : { safe: true }
+    })
   ]
 })
 

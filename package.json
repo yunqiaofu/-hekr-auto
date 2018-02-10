@@ -3,7 +3,10 @@
   "version": "0.2.0",
   "description": "A Vue.js project",
   "author": "nashaofu <diaocheng@outlook.com>",
-  "main": "./auto.js",
+  "main": "dist/auto.js",
+  "files": [
+    "dist/*"
+  ],
   "scripts": {
     "dev": "node build/dev-server.js",
     "docs": "node build/docs.js",
