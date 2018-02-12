@@ -99,8 +99,12 @@ http://10.1.1.6:3200/#/
     name: 'app',
     data () {
       return {
-        components: [], // 存储渲染组件配置列表
         state: {} // 存储状态信息
+      }
+    },
+    computed: {
+      components () {
+        return this.$auto.getComponents(this.state)
       }
     },
     mounted () {
@@ -123,15 +127,6 @@ http://10.1.1.6:3200/#/
         })
 
       })
-    },
-    watch: {
-      state: {
-        deep: true,
-        handler (val) {
-          // state变化之后就去更新页面，保证上报的数据能够渲染到页面
-          this.components = this.$auto.getComponents(val)
-        }
-      }
     }
   }
   </script>

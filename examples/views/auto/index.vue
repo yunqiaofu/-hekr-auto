@@ -14,13 +14,12 @@
 <script>
 export default {
   name: 'auto-demo',
-  data () {
-    return {
-      components: []
+  computed: {
+    components () {
+      return this.$auto.getComponents({})
     }
   },
   created () {
-    this.components = this.$auto.getComponents({})
     console.log(this.$auto)
   },
   methods: {
@@ -35,7 +34,6 @@ export default {
         })
       }
       console.log(this.$auto)
-      this.components = this.$auto.getComponents({})
     }
   }
 }

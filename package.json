@@ -1,6 +1,6 @@
 {
   "name": "@hekr/auto",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "A auto layout library for Hekr html5 page",
   "author": "nashaofu <diaocheng@outlook.com>",
   "main": "dist/auto.js",
