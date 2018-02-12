@@ -50,36 +50,25 @@ http://10.1.1.6:3200/#/
     }
   })
 
-  // 等到sdk完成之后，初始化应用，保证语言和配置信息能够拿到
-  /* eslint-disable no-new */
-  $hekr.ready(() => {
-    // 确保被安装，否则Auto无法正常运行
-    Vue.use(HekrComponents, {
-      lang: $hekr.app.lang || 'en-US'
-    })
+  // 确保被安装，否则Auto无法正常运行
+  Vue.use(HekrComponents)
+  // 安装library中包含的组件
+  Vue.use(Auto, {
+    // 必须传入一个函数，不要直接写this.$hekr.send，这样会导致send函数内部this指向错误
+    send: val => $hekr.send(val),
+    delay: 500, // 命令发送时，节流延时时间，默认值为500
+    /*
+    * 要过滤掉的参数，即在模板中已经编写了的组件
+    * 也可以在getComponents执行后调用filter去过滤
+    */
+    filter: ['sw', 'light']
+  })
 
-    // 安装library中包含的组件
-    Vue.use(Auto, {
-      lang: $hekr.app.lang
-      ui: $hekr.i18nUI.ui, // 拉取到的ui配置信息
-      i18n: $hekr.i18nUI.i18n, // 拉取到的语言包配置
-      protocol: $hekr.template.protocol,
-      // 必须传入一个函数，不要直接写this.$hekr.send，这样会导致send函数内部this指向错误
-      send: val => $hekr.send(val),
-      delay: 500, // 命令发送时，节流延时时间，默认值为500
-      /*
-      * 要过滤掉的参数，即在模板中已经编写了的组件
-      * 也可以在getComponents执行后调用filter去过滤
-      */
-      filter: ['sw', 'light'],
-    })
-
-    new Vue({
-      el: '#app',
-      store,
-      template: '<App/>',
-      components: { App }
-    })
+  new Vue({
+    el: '#app',
+    store,
+    template: '<App/>',
+    components: { App }
   })
   ```
 5. 初始化Auto(App.vue)
@@ -115,15 +104,25 @@ http://10.1.1.6:3200/#/
       }
     },
     mounted () {
-      this.$hekr.on('devSend', data => {
-        const state = {...this.state}
-        Object.keys(data).forEach(key => {
-          state[key] = data[key]
+      this.$hekr.ready(() => {
+        this.$i18n.use(this.$hekr.app.lang)
+        this.$auto.set({
+          lang: this.$hekr.app.lang,
+          ui: this.$hekr.i18nUI.ui,
+          i18n: this.$hekr.i18nUI.i18n,
+          protocol: this.$hekr.template.protocol
         })
-        this.state = state
+        // 这里可以根据key遍历过滤掉已经写在模板中的组件
+        this.components = this.$auto.getComponents(this.state)
+        this.$hekr.on('devSend', data => {
+          const state = {...this.state}
+          Object.keys(data).forEach(key => {
+            state[key] = data[key]
+          })
+          this.state = state
+        })
+
       })
-      // 这里可以根据key遍历过滤掉已经写在模板中的组件
-      this.components = this.$auto.getComponents(this.state)
     },
     watch: {
       state: {
@@ -225,12 +224,26 @@ http://10.1.1.6:3200/#/
 
 ## Auto类
 
+### 初始化
+```js
+const $auto = new Auto ({
+  ui = [], // ui配置信息
+  lang = 'zh-CN', // 语言
+  i18n = {}, // 语言包
+  send = () => { }, // 发送命令的函数
+  delay = 500, // 命令发送节流
+  filter = [], // 筛选数组，去掉模板中已经编写的
+  protocol = {} // 协议
+})
+```
+
 ### 属性
 
 | 名称 | 类型 | 说明 |
 | --- | --- | --- |
 | options | object | 类的相关配置参数 |
 | cmds | object | 以cmdTag为键的对象集合 |
+| components | object | 各种类型的参数所对应的组件 |
 | i18n | object | 当前语言配置 |
 | parameter | array | 每一项为经过抽象的参数，包含参数类型、名称、标识符、取值范围、关联下发命令等参数 |
 | defaultState | object | 所有参数的默认状态 |
@@ -240,6 +253,7 @@ http://10.1.1.6:3200/#/
 | 名称 | 说明 | 参数 | 返回值 |
 | --- | --- | --- | --- |
 | get | 获取指定参数的配置 | 参数标识符 | parameter中某一项 |
+| set | 设置更新内部的配置 | `{ui, lang, i18n, send, delay, filter, protocol}` | - |
 | has | 指定参数是否存在于协议中 | 参数标识符 | true/false |
 | visible | 返回指定参数是否显示，如参数列表中没有这个参数就返回false | 参数标识符 | true/false |
 | use | 安装扩展组件，安装之前必须确保组件已经被全局安装 | 组件数组或单个组件 | - |

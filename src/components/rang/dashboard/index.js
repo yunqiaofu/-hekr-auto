@@ -12,6 +12,7 @@ export default {
         min: options.rang.min,
         max: options.rang.max,
         unit: options.unit,
+        step: options.step,
         disabled: !options.mode.w
       },
       events: {

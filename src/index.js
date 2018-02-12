@@ -6,9 +6,7 @@ const install = (Vue, opts) => {
   }
   Object.keys(components)
     .forEach(key => Vue.use(components[key]))
-  if (opts) {
-    Vue.prototype.$auto = new Auto(opts)
-  }
+  Vue.prototype.$auto = new Auto(opts)
 }
 
 export default {

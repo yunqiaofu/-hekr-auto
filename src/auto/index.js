@@ -29,12 +29,12 @@ export default class Auto {
       send,
       delay,
       filter,
-      protocol,
-      components: {
-        bool: {},
-        enum: {},
-        rang: {}
-      }
+      protocol
+    }
+    this.components = {
+      bool: {},
+      enum: {},
+      rang: {}
     }
 
     this.i18n = this.getI18n()
@@ -91,6 +91,34 @@ export default class Auto {
   }
 
   /**
+   * 设置更新Auto配置
+   * @param {Object} param
+   */
+  set ({
+    ui, // ui配置信息
+    lang, // 语言
+    i18n, // 语言包
+    send, // 发送命令的函数
+    delay, // 命令发送节流
+    filter, // 筛选数组，去掉模板中已经编写的
+    protocol // 协议
+  } = {}) {
+    this.options = {
+      ui: ui || this.options.ui,
+      lang: lang || this.options.lang,
+      i18n: i18n || this.options.i18n,
+      send: send || this.options.send,
+      delay: delay || this.options.delay,
+      filter: filter || this.options.filter,
+      protocol: protocol || this.options.protocol
+    }
+    this.i18n = this.getI18n()
+    this.cmds = this.getCmds()
+    this.parameter = this.getParameter()
+    this.defaultState = this.getDefaultState()
+  }
+
+  /**
    * 判断是否有这个参数在协议中
    * @param {String} key
    */
@@ -112,7 +140,7 @@ export default class Auto {
    * @param {Object|Array} component
    */
   use (component) {
-    use(this.options.components, component)
+    use(this.components, component)
   }
 
   /**
@@ -149,7 +177,7 @@ export default class Auto {
       delay: this.delay,
       parameter: this.parameter
         .filter(item => item.visible && this.options.filter.indexOf(item.key) === -1),
-      components: this.options.components
+      components: this.components
     })
   }
 }

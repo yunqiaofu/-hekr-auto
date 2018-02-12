@@ -4,6 +4,8 @@
     v-model="val",
     :max="max",
     :min="min",
+    :title="title",
+    :unit="unit",
     :step="step",
     :type="type",
     :disabled="disabled"
@@ -29,6 +31,10 @@ export default {
     max: {
       type: Number,
       default: 100
+    },
+    unit: {
+      type: String,
+      default: ''
     },
     step: {
       type: Number,
