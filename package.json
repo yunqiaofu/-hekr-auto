@@ -1,7 +1,7 @@
 {
   "name": "@hekr/auto",
   "version": "0.2.1",
-  "description": "A Vue.js project",
+  "description": "A auto layout library for Hekr html5 page",
   "author": "nashaofu <diaocheng@outlook.com>",
   "main": "dist/auto.js",
   "files": [
