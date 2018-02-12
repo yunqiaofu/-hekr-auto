@@ -6,7 +6,9 @@ const install = (Vue, opts) => {
   }
   Object.keys(components)
     .forEach(key => Vue.use(components[key]))
-  Vue.prototype.$auto = new Auto(opts)
+  const $auto = new Auto(opts)
+  $auto.vm = new Vue({ data: $auto })
+  Vue.prototype.$auto = $auto
 }
 
 export default {
