@@ -7,6 +7,7 @@ const install = (Vue, opts) => {
   Object.keys(components)
     .forEach(key => Vue.use(components[key]))
   const $auto = new Auto(opts)
+  $auto.vm = null
   $auto.vm = new Vue({ data: $auto })
   Vue.prototype.$auto = $auto
 }
