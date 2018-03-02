@@ -2,7 +2,7 @@
  * 根基语言配置从语言包中提取出指定语言包配置
  */
 export default ({
-  lang = 'zh-CN',
+  lang = 'en-US',
   i18n = {}
 } = {}) => {
   const _i18n = {}

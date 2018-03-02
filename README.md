@@ -223,7 +223,7 @@ http://10.1.1.6:3200/#/
 ```js
 const $auto = new Auto ({
   ui = [], // ui配置信息
-  lang = 'zh-CN', // 语言
+  lang = 'en-US', // 语言
   i18n = {}, // 语言包
   send = () => { }, // 发送命令的函数
   delay = 500, // 命令发送节流
