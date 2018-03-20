@@ -7,7 +7,8 @@
     :key="index",
     :is="item.name",
     v-bind="item.props",
-    v-on="item.events"
+    v-on="item.events",
+    @input="input"
   )
   .auto-demo-code
     .auto-demo-code-title sw2的参数详情
@@ -46,6 +47,9 @@ export default {
         })
       }
       console.log(this.$auto)
+    },
+    input (val) {
+      console.log(val)
     }
   }
 }
