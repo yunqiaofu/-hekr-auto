@@ -9,6 +9,18 @@
     v-bind="item.props",
     v-on="item.events"
   )
+  .auto-demo-code
+    .auto-demo-code-title sw2的参数详情
+    pre.auto-demo-code-item
+      code sw2: {{ $auto.get('sw2') }}
+    pre.auto-demo-code-item
+      code visible: {{ $auto.visible('sw2') }}
+    pre.auto-demo-code-item
+      code visible: {{ $auto.visible('sw3') }}
+    pre.auto-demo-code-item
+      code disabled: {{ $auto.disabled('sw2') }}
+    pre.auto-demo-code-item
+      code getParameterAttr: {{ $auto.get('sw2.mode.w') }}
 </template>
 
 <script>

@@ -87,7 +87,15 @@ export default class Auto {
    * @param {String} key
    */
   get (key) {
-    return this.parameter.find(item => item.key === key)
+    if (typeof key !== 'string') return
+    const k = key.split('.')
+    let val = this.parameter.find(item => item.key === k[0])
+    if (typeof val !== 'object') return val
+    for (let i = 1, length = k.length; i < length; i++) {
+      val = val[k[i]]
+      if (val === undefined) break
+    }
+    return val
   }
 
   /**
@@ -131,8 +139,15 @@ export default class Auto {
    * @param {String} key
    */
   visible (key) {
-    const parameter = this.get(key)
-    return parameter ? parameter.visible : false
+    return !!this.get(`${key}.visible`)
+  }
+
+  /**
+   * 获取参数是否disabled
+   * @param {String} key
+   */
+  disabled (key) {
+    return this.visible(key) ? !this.get(`${key}.mode.w`) : true
   }
 
   /**

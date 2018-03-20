@@ -247,10 +247,11 @@ const $auto = new Auto ({
 
 | 名称 | 说明 | 参数 | 返回值 |
 | --- | --- | --- | --- |
-| get | 获取指定参数的配置 | 参数标识符 | parameter中某一项 |
+| get | 获取指定参数的配置，属性以`.`分割， 如获取`sw`参数的`mode`的`w`的属性值，可写为`get('sw.mode.w')` | 参数标识符 | parameter中某一项 |
 | set | 设置更新内部的配置 | `{ui, lang, i18n, send, delay, filter, protocol}` | - |
 | has | 指定参数是否存在于协议中 | 参数标识符 | true/false |
 | visible | 返回指定参数是否显示，如参数列表中没有这个参数就返回false | 参数标识符 | true/false |
+| disabled | 返回指定参数是否不可下发命令，如参数返回visible为false，就返回true，否则就读取mode.w属性 | 参数标识符 | true/false |
 | use | 安装扩展组件，安装之前必须确保组件已经被全局安装 | 组件数组或单个组件 | - |
 
 组件配置如下

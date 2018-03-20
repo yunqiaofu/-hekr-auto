@@ -78,6 +78,25 @@ export default {
         'maxValueMean': '100',
         'minValueMean': '0',
         'enumeration': []
+      },
+      {
+        'dataType': 'NUMBER',
+        'name': 'sw2',
+        'desc': '开关2',
+        'dataLength': 1,
+        'available': true,
+        'usedForIFTTT': false,
+        'order': 3,
+        'enumeration': [
+          {
+            'value': 0,
+            'desc': '关'
+          },
+          {
+            'value': 1,
+            'desc': '开'
+          }
+        ]
       }
     ],
     'usedForIFTTT': false
