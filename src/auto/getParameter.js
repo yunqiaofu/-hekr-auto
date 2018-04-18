@@ -42,7 +42,9 @@ export default ({
             options[item.name].visible = uiConfig.visible
           }
         }
-        if (frameType === 2) {
+
+        // 支持48透传协议
+        if (frameType === 2 || frameType === 7) {
           options[item.name].mode.w = true
           options[item.name].cmdTag = key
         } else {
