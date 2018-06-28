@@ -56,7 +56,7 @@ export default {
     fetchSource () {
       this.$http = axios.CancelToken.source()
       // 拉取源代码
-      axios.get(`/views/${this.$route.name}/index.vue`, {
+      axios.get(`./views/${this.$route.name}/index.vue`, {
         cancelToken: this.$http.token
       }).then(({ data }) => {
         // 高亮显示源代码

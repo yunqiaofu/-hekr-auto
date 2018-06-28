@@ -29,6 +29,7 @@ exports.cssLoaders = function (options) {
     if (options.extract) {
       return ExtractTextPlugin.extract({
         use: loaders,
+        publicPath: process.env.CSSPP,
         fallback: 'vue-style-loader'
       })
     } else {
