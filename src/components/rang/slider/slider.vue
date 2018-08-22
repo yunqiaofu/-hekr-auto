@@ -7,7 +7,8 @@
     :step="step",
     :title="title",
     :unit="unit",
-    :disabled="disabled"
+    :disabled="disabled",
+    @input="update"
   )
 </template>
 
@@ -44,14 +45,19 @@ export default {
       default: ''
     }
   },
-  computed: {
-    val: {
-      get () {
-        return this.value
-      },
-      set (val) {
-        this.$emit('input', val)
-      }
+  data () {
+    return {
+      val: this.value
+    }
+  },
+  watch: {
+    value () {
+      this.val = this.value
+    }
+  },
+  methods: {
+    update (val) {
+      this.$emit('input', val)
     }
   }
 }
