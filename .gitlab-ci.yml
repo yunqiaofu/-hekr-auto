@@ -10,5 +10,5 @@
     - master
   when: always
   environment:
-    name: 10.10.1.3
+    name: 10.10.1.2
     url: http://10.10.1.2:7777/auto/index.html
