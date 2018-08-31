@@ -2,8 +2,8 @@
   script:
     - npm install --registry=http://npm.hekr.me
     - npm run docs
-    - rm -rf /home/diao.cheng/fed-docs/auto/*
-    - cp -R docs/* /home/diao.cheng/fed-docs/auto/
+    - rm -rf /data/www/fed-docs/auto/*
+    - cp -R docs/* /data/www/fed-docs/auto/
   tags:
     - hz-test
   only:
@@ -11,4 +11,4 @@
   when: always
   environment:
     name: 10.10.1.3
-    url: http://10.10.1.3:7777/auto/index.html
+    url: http://10.10.1.2:7777/auto/index.html
