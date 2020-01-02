@@ -87,7 +87,7 @@
     "url": "git@gitlab.hekr.me:diao.cheng/auto.git"
   },
   "publishConfig": {
-    "registry": "http://npm.hekr.me"
+    "registry": "https://registry.npmjs.org"
   },
   "engines": {
     "node": ">= 4.0.0",
